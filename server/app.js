@@ -3,15 +3,22 @@ const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
+const pgSession = require('connect-pg-simple')(session);
+const pool = require('./db/pool');
 const userRouter = require('./routes/userRouter');
 const postRouter = require('./routes/postRouter');
-const signInUpRouter = require('./routes/signInUpRouter');
+const authRouter = require('./routes/authRouter');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(
   session({
+    store: new pgSession({
+      pool,
+      tableName: 'session',
+      createTableIfMissing: true,
+    }),
     secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: false,
@@ -30,7 +37,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('api/posts', postRouter);
 app.use('/api/users', userRouter);
-app.use('api/', signInUpRouter);
+app.use('api/', authRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
