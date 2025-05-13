@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { getUserById, updateUser } = require('../controllers/userController');
-const { ensureAuthenticated } = require('../controllers/postController');
+const { ensureAuthenticated } = require('../controllers/authController');
 
 const userRouter = Router();
 

@@ -23,4 +23,10 @@ const logIn = (req, res) => {
     failureRedirect: '/api/login',
   });
 };
-module.exports = { signUp, logIn };
+
+const ensureAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) return next();
+  res.status(401).json({ status: 'fail', message: 'Unauthorized' });
+};
+
+module.exports = { signUp, logIn, ensureAuthenticated };

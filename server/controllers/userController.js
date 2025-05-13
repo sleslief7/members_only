@@ -12,7 +12,7 @@ const getUserById = asyncHandler(async (req, res) => {
   res.status(200).json(user);
 });
 
-const updateUser = asyncHandler(async (req, user) => {
+const updateUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const user = await queryUserById(id);
   if (!user) {

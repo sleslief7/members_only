@@ -6,10 +6,6 @@ const {
   queryDeletePostById,
 } = require('../db/queries');
 
-const ensureAuthenticated = (req, res, next) => {
-  if (req.isAuthenticated()) return next();
-  res.status(401).json({ status: 'fail', message: 'Unauthorized' });
-};
 const getAllPosts = asyncHandler(async (req, res) => {
   const posts = await queryAllPosts();
   res.status(200).json(posts);
@@ -55,5 +51,4 @@ module.exports = {
   getPostById,
   createPost,
   deletePostId,
-  ensureAuthenticated,
 };

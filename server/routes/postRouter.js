@@ -4,8 +4,8 @@ const {
   getPostById,
   createPost,
   deletePostId,
-  ensureAuthenticated,
 } = require('../controllers/postController');
+const { ensureAuthenticated } = require('../controllers/authController');
 
 const postRouter = Router();
 
