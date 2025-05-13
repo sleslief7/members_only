@@ -1,13 +1,9 @@
-const {
-  queryCreateUser,
-  queryUserByUsername,
-  queryUserById,
-} = require('../db/queries');
+const { queryCreateUser } = require('../db/queries');
 const bcrypt = require('bcrypt');
-const LocalStrategy = require('passport-local').Strategy;
+const passport = require('passport');
 const asyncHandler = require('express-async-handler');
 
-const createUser = asyncHandler(async (req, res) => {
+const signUp = asyncHandler(async (req, res) => {
   const { firstName, lastName, userName, password } = req.body;
   if (!firstName || !lastName || !userName || !password) {
     return res
@@ -21,36 +17,10 @@ const createUser = asyncHandler(async (req, res) => {
   res.status(201).json(user);
 });
 
-const initializePassport = (passport) => {
-  passport.use(
-    new LocalStrategy(async (username, password, done) => {
-      try {
-        const user = await queryUserByUsername(username);
-        if (!user) {
-          return done(null, false, { message: 'No user with that username' });
-        }
-        const match = await bcrypt.compare(password, user.password);
-        if (!match) {
-          return done(null, false, { message: 'Password incorrect' });
-        }
-
-        return done(null, user);
-      } catch (err) {
-        return done(err);
-      }
-    })
-  );
-
-  passport.serializeUser((user, done) => done(null, user.id));
-
-  passport.deserializeUser(async (id, done) => {
-    try {
-      const user = await queryUserById(id);
-      return done(null, user);
-    } catch (err) {
-      return done(err);
-    }
+const logIn = (req, res) => {
+  passport.authenticate('local', {
+    successRedirect: '/api/posts',
+    failureRedirect: '/api/login',
   });
 };
-
-module.exports = { createUser, initializePassport };
+module.exports = { signUp, logIn };
