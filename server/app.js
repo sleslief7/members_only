@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
+const initializePassport = require('./controllers/authController');
 const pgSession = require('connect-pg-simple')(session);
 const pool = require('./db/pool');
 const userRouter = require('./routes/userRouter');
@@ -10,6 +11,7 @@ const postRouter = require('./routes/postRouter');
 const authRouter = require('./routes/authRouter');
 
 const app = express();
+initializePassport(passport);
 const PORT = process.env.PORT || 3000;
 
 app.use(
@@ -32,11 +34,20 @@ app.use(
     origin: process.env.CLIENT_URL || 'http://localhost:5173',
   })
 );
+app.use(passport.initialize());
 app.use(passport.session());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('api/posts', postRouter);
+app.use('/api/posts', postRouter);
 app.use('/api/users', userRouter);
+app.post(
+  '/api/login',
+  passport.authenticate('local', {
+    successRedirect: '/api/posts',
+    failureRedirect: '/api/login',
+  })
+);
 app.use('api/', authRouter);
 
 app.listen(PORT, () => {
