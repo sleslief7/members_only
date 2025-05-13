@@ -1,42 +1,27 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const session = require('express-session');
 const passport = require('./auth');
-const pgSession = require('connect-pg-simple')(session);
-const pool = require('./db/pool');
+const sessionMiddleware = require('./auth/session');
+
 const userRouter = require('./routes/userRouter');
 const postRouter = require('./routes/postRouter');
 const authRouter = require('./routes/authRouter');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const CORS_ORIGIN = process.env.CLIENT_URL || 'http://localhost:5173';
 
-app.use(
-  session({
-    store: new pgSession({
-      pool,
-      tableName: 'session',
-      createTableIfMissing: true,
-    }),
-    secret: process.env.SECRET_KEY,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
-    },
-  })
-);
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(cors({ origin: CORS_ORIGIN, credentials: true }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(sessionMiddleware);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/api/posts', postRouter);
 app.use('/api/users', userRouter);
 app.use('/api', authRouter);
