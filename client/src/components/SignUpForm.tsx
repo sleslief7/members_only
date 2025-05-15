@@ -1,3 +1,4 @@
+import { toaster } from '@/components/ui/toaster';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { signup } from '../api/queries';
@@ -21,6 +22,11 @@ const SignUpForm = () => {
     }
     setError('');
     await signup({ firstName, lastName, username, password });
+
+    toaster.create({
+      title: 'Sign up successful!',
+      type: 'success',
+    });
     navigate('/login');
   };
 

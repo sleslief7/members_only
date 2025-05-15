@@ -15,7 +15,7 @@ const Header = () => {
 
   return (
     <div id="header">
-      <div id="profile-btn">@</div>
+      <button className="btn">Become a member</button>
       <div id="logo">Anonymous</div>
       <button id="log-out" className="btn" onClick={logoutHandler}>
         Log Out
