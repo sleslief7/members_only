@@ -9,9 +9,9 @@ export interface User {
 }
 
 export interface UserSignUpRequest {
-  id: number;
-  first_name: string;
-  last_name: string;
+  id?: number;
+  firstName: string;
+  lastName: string;
   username: string;
   password: string;
 }

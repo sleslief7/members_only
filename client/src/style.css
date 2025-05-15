@@ -43,7 +43,7 @@
   justify-content: center;
   padding: 5px;
 }
-.form {
+.signup-login-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -98,4 +98,8 @@ input {
 }
 .post-date {
   align-self: self-end;
+}
+
+#password-error {
+  color: red;
 }

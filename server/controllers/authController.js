@@ -39,7 +39,7 @@ const ensureAuthenticated = (req, res, next) => {
 
 const getAuthStatus = (req, res) => {
   if (req.isAuthenticated()) {
-    res.status(200).json({ isAuth: true, user: req.user });
+    return res.status(200).json({ isAuth: true, user: req.user });
   }
   res.status(201).send();
 };

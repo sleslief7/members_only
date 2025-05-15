@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { User } from '../interfaces/userInterface';
+import type { User, UserSignUpRequest } from '../interfaces/userInterface';
 const API_URL = `${import.meta.env.VITE_API_URL}/api`;
 
 const apiClient = axios.create({
@@ -48,6 +48,20 @@ export const checkAuth = async () => {
     return res.data;
   } catch (err) {
     console.error('Error checking auth', err);
+    throw err;
+  }
+};
+
+export const signup = async (user: UserSignUpRequest) => {
+  try {
+    await apiClient.post(`/sign-up`, {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      username: user.username,
+      password: user.password,
+    });
+  } catch (err) {
+    console.error('Error logging out', err);
     throw err;
   }
 };
