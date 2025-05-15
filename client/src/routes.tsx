@@ -3,7 +3,9 @@ import App from './App';
 import LoginPage from './components/pages/LoginPage';
 import SignUpPage from './components/pages/SignUpPage';
 import DashboardPage from './components/pages/DashboardPage';
-import { getAllPosts } from './actions/loaders';
+import { getAllPosts } from './api/queries';
+import EnsureAuth from './util/EnsureAuth';
+import RedirectIfAuth from './util/RedirectIfAuth';
 
 const router = createBrowserRouter([
   {
@@ -12,18 +14,31 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DashboardPage />,
+        element: (
+          <EnsureAuth>
+            <DashboardPage />
+          </EnsureAuth>
+        ),
         loader: getAllPosts,
       },
       {
         path: '/login',
-        element: <LoginPage />,
+        element: (
+          <RedirectIfAuth>
+            <LoginPage />
+          </RedirectIfAuth>
+        ),
       },
       {
         path: '/sign-up',
-        element: <SignUpPage />,
+        element: (
+          <RedirectIfAuth>
+            <SignUpPage />
+          </RedirectIfAuth>
+        ),
       },
     ],
   },
 ]);
+
 export default router;

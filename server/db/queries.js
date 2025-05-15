@@ -34,6 +34,14 @@ const queryUserById = async (id) => {
 };
 
 const queryUserByUsername = async (username) => {
+  const { rows } = await pool.query(
+    `SELECT id, first_name, last_name, username, created_at, is_member, is_admin FROM users WHERE username = $1`,
+    [username]
+  );
+  return rows[0];
+};
+
+const getFullUserByUsername = async (username) => {
   const { rows } = await pool.query(`SELECT * FROM users WHERE username = $1`, [
     username,
   ]);
@@ -66,4 +74,5 @@ module.exports = {
   queryCreateUser,
   queryUpdateUser,
   queryUserByUsername,
+  getFullUserByUsername,
 };

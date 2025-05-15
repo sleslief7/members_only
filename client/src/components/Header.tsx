@@ -1,9 +1,25 @@
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../api/queries';
+import { useAuth } from '../hooks/useAuth';
+
 const Header = () => {
+  const { logout: contextLogout } = useAuth();
+
+  const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    await logout();
+    contextLogout();
+    navigate('/login');
+  };
+
   return (
     <div id="header">
       <div id="profile-btn">@</div>
-      <div id="logo">Logo</div>
-      <div id="log-out">-@</div>
+      <div id="logo">Anonymous</div>
+      <button id="log-out" className="btn" onClick={logoutHandler}>
+        Log Out
+      </button>
     </div>
   );
 };

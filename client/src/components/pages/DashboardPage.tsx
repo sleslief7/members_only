@@ -8,7 +8,7 @@ const DashboardPage = () => {
   return (
     <div>
       {posts.map((post: Post) => {
-        return <PostCard post={post} />;
+        return <PostCard key={post.id} post={post} />;
       })}
     </div>
   );

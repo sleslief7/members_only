@@ -21,6 +21,16 @@
   justify-content: space-between;
   padding: 5px;
 }
+#logo {
+  font-weight: bolder;
+  font-size: 2rem;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+#logo:hover {
+  border: 2px solid var(--secondary-color);
+  border-radius: 10px;
+}
 #outlet {
   padding: 10px;
 }
@@ -33,14 +43,14 @@
   justify-content: center;
   padding: 5px;
 }
-#login-form {
+.form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
 }
-#login-header {
+.form-header {
   text-align: center;
   padding-bottom: 15px;
 }
@@ -49,14 +59,14 @@ input {
   padding: 5px 8px;
   border: 3px solid var(--secondary-color);
 }
-#login-container {
+.form-container {
   border: 1.5px solid var(--secondary-color);
   border-radius: 5px;
   padding: 8px 16px;
   width: max-content;
   background-color: var(--third-color);
 }
-#login-page {
+.form-page {
   display: flex;
   justify-content: center;
 }

@@ -17,14 +17,31 @@ const signUp = asyncHandler(async (req, res) => {
   res.status(201).json({ message: 'Successfully signed up' });
 });
 
-const logIn = passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-});
+const logIn = (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err);
+
+    if (!user) {
+      return res.status(401).json({ message: info?.message || 'Login failed' });
+    }
+
+    req.logIn(user, function (err) {
+      if (err) return next(err);
+      return res.json({ message: 'Login successful', user });
+    });
+  })(req, res, next);
+};
 
 const ensureAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) return next();
   res.status(401).json({ status: 'fail', message: 'Unauthorized' });
 };
 
-module.exports = { signUp, logIn, ensureAuthenticated };
+const getAuthStatus = (req, res) => {
+  if (req.isAuthenticated()) {
+    res.status(200).json({ isAuth: true, user: req.user });
+  }
+  res.status(201).send();
+};
+
+module.exports = { signUp, logIn, ensureAuthenticated, getAuthStatus };
