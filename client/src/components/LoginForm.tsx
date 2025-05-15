@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { login } from '../api/queries';
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
@@ -9,12 +9,9 @@ const LoginForm = () => {
 
   const { login: contextLogin } = useAuth();
 
-  const navigate = useNavigate();
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user = await login(username, password);
-    navigate('/');
     contextLogin(user);
   };
 
