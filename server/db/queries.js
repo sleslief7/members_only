@@ -2,7 +2,11 @@ const pool = require('./pool');
 
 const queryAllPosts = async () => {
   const { rows } = await pool.query(
-    'SELECT * FROM posts ORDER BY created_at DESC'
+    `SELECT posts.*, users.username
+    FROM posts
+     JOIN users ON posts.user_id = users.id
+     ORDER BY posts.created_at DESC
+    `
   );
   return rows;
 };
@@ -60,7 +64,7 @@ const queryUpdateUser = async (user) => {
   const { id, isAdmin, isMember } = user;
   const { rows } = await pool.query(
     `UPDATE users SET is_member = $1, is_admin = $2 WHERE id = $3 RETURNING *`,
-    [isAdmin, isMember, id]
+    [isMember, isAdmin, id]
   );
   return rows[0];
 };

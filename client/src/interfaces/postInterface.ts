@@ -4,4 +4,11 @@ export interface Post {
   title: string;
   content: string;
   created_at: string;
+  username: string;
+}
+
+export interface CreatePost {
+  user_id?: number | undefined;
+  title: string;
+  content: string;
 }

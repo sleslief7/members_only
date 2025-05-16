@@ -6,6 +6,7 @@ interface UserContextType {
   user: User | null;
   login: (user: User) => void;
   logout: () => void;
+  setUser: (user: User) => void;
 }
 
 export const AuthContext = createContext<UserContextType | undefined>(

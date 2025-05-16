@@ -21,8 +21,8 @@ const updateUser = asyncHandler(async (req, res) => {
       .json({ status: 'fail', message: 'There is no user with that id.' });
   }
   const { isAdmin, isMember } = req.body;
-  await queryUpdateUser({ id, isAdmin, isMember });
-  res.status(201).json(user);
+  const updatedUser = await queryUpdateUser({ id, isAdmin, isMember });
+  res.status(201).json({ ...updatedUser, password: undefined });
 });
 
 module.exports = { getUserById, updateUser };

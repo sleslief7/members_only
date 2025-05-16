@@ -1,7 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-}
 :root {
   --primary-color: rgb(237, 209, 254);
   --secondary-color: rgb(166, 42, 243);
@@ -42,6 +38,7 @@
   align-items: center;
   justify-content: center;
   padding: 5px;
+  gap: 5px;
 }
 .signup-login-form {
   display: flex;
@@ -88,18 +85,45 @@ input {
   border: 2px solid var(--secondary-color);
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 300px;
   padding: 10px 15px;
   gap: 10px;
   border-radius: 10px;
 }
 .post-title {
+  display: flex;
+  justify-content: space-between;
   border-bottom: 1px solid var(--secondary-color);
+  font-weight: bold;
 }
 .post-date {
   align-self: self-end;
+  font-weight: 500;
 }
-
+.delete-post:hover {
+  color: red;
+  cursor: pointer;
+}
 #password-error {
   color: red;
+}
+.author {
+  border-top: 1px solid var(--secondary-color);
+  font-weight: 500;
+}
+
+#header-left {
+  display: flex;
+  gap: 5px;
+}
+
+#posts-page {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+#add-post-div {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: end;
 }

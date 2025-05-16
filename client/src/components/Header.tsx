@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../api/queries';
 import { useAuth } from '../hooks/useAuth';
+import MembershipDialog from './MembershipDialog';
 
 const Header = () => {
-  const { logout: contextLogout } = useAuth();
+  const { logout: contextLogout, isAuth, user } = useAuth();
 
   const navigate = useNavigate();
 
@@ -15,11 +16,20 @@ const Header = () => {
 
   return (
     <div id="header">
-      <button className="btn">Become a member</button>
-      <div id="logo">Anonymous</div>
-      <button id="log-out" className="btn" onClick={logoutHandler}>
-        Log Out
-      </button>
+      <div id="header-left">
+        {!user?.is_member && isAuth && <MembershipDialog />}
+      </div>
+      <div id="logo" onClick={() => navigate('/')}>
+        Post Club
+      </div>
+
+      <div id="header-right">
+        {isAuth && (
+          <button id="log-out" className="btn" onClick={logoutHandler}>
+            Log Out
+          </button>
+        )}
+      </div>
     </div>
   );
 };
