@@ -2,10 +2,10 @@ const pool = require('./pool');
 
 const queryAllPosts = async () => {
   const { rows } = await pool.query(
-    `SELECT posts.*, users.username
-    FROM posts
-     JOIN users ON posts.user_id = users.id
-     ORDER BY posts.created_at DESC
+    `SELECT posts.*, users.username FROM posts
+     JOIN users 
+     ON posts.user_id = users.id
+     ORDER BY posts.created_at DESC;
     `
   );
   return rows;
