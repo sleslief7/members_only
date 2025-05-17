@@ -17,6 +17,7 @@ app.use(cors({ origin: CORS_ORIGIN, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.set('trust proxy', 1);
 app.use(sessionMiddleware);
 
 app.use(passport.initialize());
