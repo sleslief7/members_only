@@ -37,6 +37,7 @@ const SignUpForm = () => {
         type="text"
         name="firstName"
         id="firstName"
+        className="input"
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
       />
@@ -45,6 +46,7 @@ const SignUpForm = () => {
         type="text"
         name="lastName"
         id="lastName"
+        className="input"
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
       />
@@ -53,6 +55,7 @@ const SignUpForm = () => {
         type="text"
         name="username"
         id="username"
+        className="input"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
@@ -61,6 +64,7 @@ const SignUpForm = () => {
         type="password"
         name="password"
         id="password"
+        className="input"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
@@ -69,6 +73,7 @@ const SignUpForm = () => {
         type="password"
         name="confirmPassword"
         id="confirmPassword"
+        className="input"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
