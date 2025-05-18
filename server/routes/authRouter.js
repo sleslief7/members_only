@@ -2,25 +2,19 @@ const { Router } = require('express');
 const {
   signUp,
   logIn,
+  logout,
   getAuthStatus,
+  googleLogin,
+  googleLoginCallback,
 } = require('../controllers/authController');
 
 const authRouter = Router();
 
 authRouter.post('/sign-up', signUp);
 authRouter.post('/login', logIn);
-authRouter.post('/logout', (req, res) => {
-  req.logout((err) => {
-    if (err) return next(err);
-
-    //res.redirect('/');
-    req.session.destroy((err) => {
-      if (err) return next(err);
-      res.clearCookie('connect.sid');
-      res.status(200).json({ message: 'Logged out' });
-    });
-  });
-});
+authRouter.post('/logout', logout);
 authRouter.get('/check-auth', getAuthStatus);
+authRouter.get('/login/google', googleLogin);
+authRouter.get('/login/google/callback', googleLoginCallback);
 
 module.exports = authRouter;

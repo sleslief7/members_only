@@ -60,6 +60,25 @@ const queryCreateUser = async (user) => {
   return rows[0];
 };
 
+const findOrCreateGoogleUser = async (user) => {
+  const { rows } = await pool.query(
+    `SELECT id, first_name, last_name, username, created_at, google_id, is_member, is_admin FROM users WHERE google_id = $1`,
+    [user.googleId]
+  );
+
+  let dbUser = rows.length === 0 ? null : rows[0];
+
+  if (!dbUser) {
+    const { rows: insertedRows } = await pool.query(
+      `INSERT INTO users (first_name, last_name, username, google_id) VALUES ($1, $2, $3, $4) RETURNING id, first_name, last_name, username, created_at, google_id, is_member, is_admin`,
+      [user.firstName, user.lastName, user.username, user.googleId]
+    );
+    dbUser = insertedRows[0];
+  }
+
+  return dbUser;
+};
+
 const queryUpdateUser = async (user) => {
   const { id, isAdmin, isMember } = user;
   const { rows } = await pool.query(
@@ -79,4 +98,5 @@ module.exports = {
   queryUpdateUser,
   queryUserByUsername,
   getFullUserByUsername,
+  findOrCreateGoogleUser,
 };

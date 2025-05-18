@@ -11,7 +11,6 @@ import {
   Button,
   Link,
   Flex,
-  Text,
 } from '@chakra-ui/react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
@@ -25,6 +24,10 @@ const NewLoginForm = () => {
   const handleSubmit = async () => {
     const user = await login(username, password);
     contextLogin(user);
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = `${import.meta.env.VITE_API_URL}/api/login/google`;
   };
 
   return (
@@ -68,9 +71,8 @@ const NewLoginForm = () => {
         </Stack>
         <Box divideY="1px"></Box>
         <Flex gap="2">
-          <Button variant="subtle" bg="pink.subtle">
-            <FcGoogle />
-            Sign in with Google
+          <Button variant="subtle" bg="pink.subtle" onClick={handleGoogleLogin}>
+            <FcGoogle /> Sign in with Google
           </Button>
           <Button variant="subtle" bg="pink.subtle">
             <FaGithub /> Sign in with Github

@@ -1,5 +1,6 @@
 const passport = require('passport');
 require('./strategies/local');
+require('./strategies/google');
 const { queryUserById } = require('../db/queries');
 
 passport.serializeUser((user, done) => done(null, user.id));
